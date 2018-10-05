@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Кофемашина</title>
+</head>
+
+<body>
+
+	<img src="coffe.gif" alt="CoffeMachine" width=200px style="margin-left: 50px; margin-top: 50px;">
+	<a class="button" onclick="$(this).html('Are you sure?').attr('onclick', 'trashTrade(\'69660142\')'">STOP</a>
+	<script>
+		// Добавить переменнную кофе(зерна)
+		// Ввести проверку на пустую кофеварку
+		// Реализовать зависимость от кол-ва кофе
+		// Реализовать метод стоп
+
+		function CoffeeMachine(power) {
+			let waterAmount = 0
+			let waterHeatCapacity = 4200
+			let maxTemp = 90
+			let cornCoffee = 0
+
+			const getBoilTime = function() {
+				return (waterAmount * waterHeatCapacity * maxTemp) / power
+			}
+
+			const checkWater = function() {
+				return waterAmount > 0
+			}
+
+			const checkCorn = function() {
+				return cornCoffee > 0
+			}
+
+			this.fill = function(newAmount) {
+				if (newAmount >= 50) {
+					waterAmount = newAmount;
+					return true;
+				} else {
+					console.error('Слишком мало воды');
+					return false;
+				}
+			}
+
+			// проверка зерен кофе
+
+			this.coffee = function(newCapacity) {
+				if (newCapacity >= 50) {
+					cornCoffee = newCapacity;
+					return true;
+				} else {
+					console.error('Слишком мало кофе')
+					return false;
+				}
+			}
+
+			this.launch = function(cf, wt) {
+				if ((this.coffee(cf)) && (this.fill(wt))) {
+					const boilTime = getBoilTime()
+					console.info(`Время приготовления: ${boilTime}`);
+					setTimeout(function() {
+						console.log('Ваш кофе готов!');
+					}, boilTime);
+					return true;
+
+				} else {
+					console.log('Кофе не будет!');
+					return false;
+				}
+
+			}
+
+		}
+
+		const vitek = new CoffeeMachine(2500)
+
+		// первое значение это кофе, второе вода
+		vitek.launch(50, 50)
+
+	</script>
+</body>
+
+</html>
